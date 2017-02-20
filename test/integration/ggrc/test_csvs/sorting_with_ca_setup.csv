@@ -68,3 +68,10 @@ Person,Name,Email*,Company,Role,,,,,,,,,,,
 ,eleven,miha@example.com,,Administrator,,,,,,,,,,,
 ,nine,rob@example.com,,Administrator,,,,,,,,,,,
 ,twelwe,ken@example.com,,Administrator,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Object type,,,,,,,,,,,,,,,
+AccessGroup,Code*,Title*,Description,Notes,,Owner*,Effective Date,Stop Date,State,Primary Contact,Secondary Contact,Access Group URL,Reference URL,Access Code,Type
+,AG-CODE-1,Title-1,Access Group description,Access Group notes,,"user@example.com
+user1@example.com",20/2/2020,22/2/2022,Draft,user2@example.com,user3@example.com,http://url.example.zzz,reference.example.zzz,code-4,type-A
+,AG-CODE-2,Title-2,Access Group description,Access Group notes,,"user@example.com
+user1@example.com",20/2/2020,22/2/2022,Draft,user2@example.com,user3@example.com,http://url.example.zzz,reference.example.zzz,code-3,type-B

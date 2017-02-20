@@ -612,6 +612,17 @@ class TestQueryWithCA(BaseQueryAPITestCase):
         definition_type="program",
         attribute_type="Date",
     )
+    # local CAD for Access Groups
+    factories.CustomAttributeDefinitionFactory(
+        title="Access Code",
+        definition_type="access_group",
+        multi_choice_options="code-1,code-2,code-3,code-4",
+    )
+    factories.CustomAttributeDefinitionFactory(
+        title="Type",
+        definition_type="access_group",
+        multi_choice_options="Type-A,Type-B",
+    )
     # local CADs for the Assessments
     for title in ["Date or arbitrary text", "Date or text styled as date"]:
       factories.CustomAttributeDefinitionFactory(
@@ -799,6 +810,32 @@ class TestQueryWithCA(BaseQueryAPITestCase):
 
     self.assertItemsEqual([asmt["title"] for asmt in assessments_mixed],
                           ["Assessment with text", "Assessment with date"])
+
+  def test_ca_conflicting_with_definition_and_object_attribute(self):
+    """
+     Test for a conflict resolution when query text contains key as attribute
+     which exits in object_class as well as part of CA definitions
+     example: CA definition created with "Type" as key;
+            "type" is a part of object_class too.
+    """
+    access_groups = self._get_first_result_set(
+        self._make_query_dict(
+            "AccessGroup",
+            expression=["Access Code", "~", "code-4"],
+        ),
+        "AccessGroup", "values",
+    )
+    self.assertItemsEqual([grp["Access Code"]
+                           for grp in access_groups], ['code-4'])
+
+    access_groups = self._get_first_result_set(
+        self._make_query_dict(
+            "AccessGroup",
+            expression=["Type", "~", "type-A"],
+        ),
+        "AccessGroup", "values",
+    )
+    self.assertItemsEqual([grp["Type"] for grp in access_groups], ['type-A'])
 
 
 class TestQueryWithUnicode(BaseQueryAPITestCase):
