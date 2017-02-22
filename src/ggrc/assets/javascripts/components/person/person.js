@@ -106,5 +106,5 @@
     }
   };
 
-  GGRC.Components('personItem', component);
+  GGRC.Components('personItem', component, true);
 })(window.GGRC, window.can);

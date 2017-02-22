@@ -3,8 +3,7 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 <!-- Objectives and Regulations Grids -->
-{{#if itemData}}
-<collapsible-panel title-text="Show Related Objectives and Regulations" collapsed="true" expanded="expanded"
+<collapsible-panel title-text="Show Related Objectives and Regulations" {^expanded}="performLoading"
                    extra-css-class="no-padding">
     <div class="grid-data-simple">
         <!-- Header -->
@@ -39,31 +38,30 @@
         </div>
       <!-- Body -->
         <div class="grid-data-body flex-box flex-box-single flex-row {{#if isLoading}}loading{{/if}}">
-            <spinner toggle="isLoading" extra-css-class="grid-spinner"
+            <spinner {toggle}="isLoading" extra-css-class="grid-spinner"
                      class="spinner-wrapper {{#if isLoading}}active{{/if}}"></spinner>
-            <object-list items="objectives" class="flex-size-1">
+            <object-list {items}="objectives" class="flex-size-1">
                 <div class="grid-data-row flex-box flex-row flex-box-single">
                     <div class="flex-box flex-row flex-box-single flex-size-1">
                         <div class="flex-size-5 flex-size-limit">
                             <div class="title-text">{{title}}</div>
-                            <read-more text="description"></read-more>
+                            <read-more {text}="description"></read-more>
                         </div>
-                        <read-more text="notes" class="flex-size-3 flex-size-limit"></read-more>
+                        <read-more {text}="notes" class="flex-size-3 flex-size-limit"></read-more>
                     </div>
                 </div>
             </object-list>
-            <object-list items="regulations" class="flex-size-1">
+            <object-list {items}="regulations" class="flex-size-1">
                 <div class="grid-data-row flex-box flex-row flex-box-single">
                     <div class="flex-box flex-row flex-box-single flex-size-1">
                         <div class="flex-size-5 flex-size-limit">
                             <div class="title-text">{{title}}</div>
-                            <read-more text="description"></read-more>
+                            <read-more {text}="description"></read-more>
                         </div>
-                        <read-more text="notes" class="flex-size-3 flex-size-limit"></read-more>
+                        <read-more {text}="notes" class="flex-size-3 flex-size-limit"></read-more>
                     </div>
                 </div>
             </object-list>
         </div>
     </div>
 </collapsible-panel>
-{{/if}}

@@ -218,3 +218,28 @@ relevant-filter {
 
   }
 }
+
+mapper-status-filter {
+  display: block;
+  margin-top: 26px;
+
+  .checkbox-wrapper {
+    display: flex;
+
+    label {
+      font-size: 12px !important;
+      margin-bottom: 0 !important;
+      margin-right: 10px;
+      cursor: pointer;
+
+      input {
+        margin-bottom: 5px;
+        margin-right: 1px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

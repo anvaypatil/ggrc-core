@@ -173,6 +173,10 @@ class TestAssessmentImport(TestCase):
                     line=2,
                     column_name="actual error message"
                 ),
+                errors.UNKNOWN_COLUMN.format(
+                    line=2,
+                    column_name="map:project"
+                ),
             },
             "row_errors": {
                 errors.MISSING_VALUE_ERROR.format(
@@ -188,11 +192,6 @@ class TestAssessmentImport(TestCase):
                 ),
             },
             "row_warnings": {
-                errors.UNKNOWN_OBJECT.format(
-                    line=14,
-                    object_type="Project",
-                    slug="proj-55"
-                ),
                 errors.UNKNOWN_OBJECT.format(
                     line=19,
                     object_type="Audit",

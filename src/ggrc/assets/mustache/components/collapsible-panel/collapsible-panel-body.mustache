@@ -2,8 +2,8 @@
     Copyright (C) 2017 Google Inc.
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
-<div class="body-inner {{#expanded}}is-expanded{{/expanded}}">
-  {{#expanded}}
-      <content></content>
-  {{/expanded}}
+<div class="body-inner {{#if expanded}}is-expanded{{/if}}">
+  {{#if expanded}}
+      <content/>
+  {{/if}}
 </div>

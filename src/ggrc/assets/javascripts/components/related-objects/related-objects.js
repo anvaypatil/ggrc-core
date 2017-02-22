@@ -24,16 +24,25 @@
         pageSizeSelect: [5, 10, 15]
       },
       getParams: function () {
-        var id = this.attr('baseInstance.id');
-        var type = this.attr('baseInstance.type');
+        var id;
+        var type;
         var relatedType = this.attr('relatedItemsType');
         var page = this.attr('paging');
         var orderBy = this.attr('orderBy') || defaultOrderBy;
         var isAssessment = this.attr('baseInstance.type') === 'Assessment';
+        var isSnapshot = !!this.attr('baseInstance.snapshot');
         var op = isAssessment ? {name: 'similar'} : {name: 'relevant'};
         var params = {};
         var first;
         var last;
+
+        if (isSnapshot) {
+          id = this.attr('baseInstance.snapshot.child_id');
+          type = this.attr('baseInstance.snapshot.child_type');
+        } else {
+          id = this.attr('baseInstance.id');
+          type = this.attr('baseInstance.type');
+        }
 
         if (page.current && page.pageSize) {
           first = (page.current - 1) * page.pageSize;

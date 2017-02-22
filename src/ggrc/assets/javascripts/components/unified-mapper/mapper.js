@@ -53,6 +53,7 @@
     deferred: '@',
     deferred_to: '@',
     filter: '',
+    statusFilter: '',
     object: '',
     model: {},
     bindings: {},
@@ -230,6 +231,28 @@
     },
 
     events: {
+      '.create-control modal:success': function (el, ev, model) {
+        this.scope.attr('mapper.newEntries').push(model);
+        this.element.find('mapper-results').scope().showNewEntries();
+      },
+      '.create-control modal:added': function (el, ev, model) {
+        this.scope.attr('mapper.newEntries').push(model);
+      },
+      '.create-control click': function () {
+        // reset new entries
+        this.scope.attr('mapper.newEntries', []);
+      },
+      '{window} modal:dismiss': function (el, ev, options) {
+        var joinObjectId = this.scope.attr('mapper.join_object_id');
+
+        // mapper sets uniqueId for modal-ajax.
+        // we can check using unique id which modal-ajax is closing
+        if (options.uniqueId &&
+          joinObjectId === options.uniqueId &&
+          this.scope.attr('mapper.newEntries').length > 0) {
+          this.element.find('mapper-results').scope().showNewEntries();
+        }
+      },
       inserted: function () {
         this.scope.attr('mapper.selected').replace([]);
         this.scope.attr('mapper.entries').replace([]);

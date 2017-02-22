@@ -24,25 +24,19 @@ class CustomControlSnapshotInstanceColumnHandler(
       return False
     return True
 
-  def is_valid_delete(self, to_delete_ids):
-    "return True if data valid else False"
-    if to_delete_ids:
-      self.add_error(errors.ILLIGAL_REMOVE_CONTROL_VALUE)
-    return not to_delete_ids
-
   def parse_item(self, *args, **kwargs):
     "parse items and make validation"
-    item = super(
+    items = super(
         CustomControlSnapshotInstanceColumnHandler, self
     ).parse_item(
         *args, **kwargs
     )
+    if self.dry_run:
+      # TODO: is_valid_creation should work with codes instead of ids and it
+      # should also be checked on dry runs.
+      return items
     exists_ids = {i for i, in self.snapshoted_instances_query.values("id")}
-    import_ids = {i.id for i in item or []}
-    to_delete_ids = exists_ids - import_ids
+    import_ids = {i.id for i in items or []}
     to_append_ids = import_ids - exists_ids
-    valid_append = self.is_valid_creation(to_append_ids)
-    valid_delete = self.is_valid_delete(to_delete_ids)
-    if not valid_append or not valid_delete:
-      return None
-    return item
+    self.is_valid_creation(to_append_ids)
+    return items

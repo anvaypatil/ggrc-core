@@ -203,12 +203,28 @@
         var useSnapshots = this.attr('mappedSnapshots');
         var hasMapping = this.attr('mapping');
         var loadFn;
+        var objects;
         if (useSnapshots) {
           loadFn = this.loadSnapshots;
         } else {
           loadFn = hasMapping ? this.load : this.loadObjects;
         }
-        this.attr('mappedItems').replace(loadFn.call(this));
+        objects = loadFn.call(this);
+        this.attr('mappedItems').replace(objects);
+        objects.then(function (data) {
+          if (!this.parentInstance.mappedSnapshots) {
+            this.parentInstance.mappedSnapshots = [];
+          }
+          data.forEach(function (item) {
+            var childIds = this.parentInstance.mappedSnapshots
+              .map(function (i) {
+                return i.instance.child_id;
+              });
+            if (childIds.indexOf(item.instance.child_id) < 0) {
+              this.parentInstance.mappedSnapshots.push(item);
+            }
+          }.bind(this));
+        }.bind(this));
       }
     },
     init: function () {

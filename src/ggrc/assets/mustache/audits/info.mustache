@@ -125,7 +125,17 @@
                 <input tabindex="3" type="text" name="instance" data-lookup="Person" null-if-empty="true" class="search-icon" placeholder="Add Auditor" {{autocomplete_select}} value="{{instance.email}}">
                 <a href="javascript://" {{toggle_button}}><i class="fa fa-trash"></i></a>
 
-                <a href="javascript://" class="btn btn-small btn-success {{^instance}}disabled{{/instance}} no-float" data-toggle="submit" {{toggle_button "modal:success"}}>Add</a>
+                {{#with_mapping 'auditor_authorizations' parent_instance}}
+                  <a
+                    href="javascript://"
+                    class="btn btn-small btn-success {{^instance}}disabled{{/instance}} no-float"
+                    data-toggle="submit" {{toggle_button "modal:success"}}
+                    {{#isInAuthList instance auditor_authorizations}}
+                      disabled
+                      title="User already set as an Auditor"
+                    {{/userExists}}
+                    >Add</a>
+                {{/with_mapping}}
               </div>
               <input type="hidden" name="role_name" value="Auditor" />
               {{/prune_context}}

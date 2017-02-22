@@ -35,5 +35,5 @@
         onClose();
       }
     }
-  });
+  }, true);
 })(window.can);

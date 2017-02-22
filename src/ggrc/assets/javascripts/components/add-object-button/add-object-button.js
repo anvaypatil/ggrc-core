@@ -12,13 +12,19 @@
       GGRC.mustache_path +
       '/components/add-object-button/add-object-button.mustache'
     ),
-    scope: {
+    viewModel: {
       instance: null,
       linkclass: '@',
       content: '@',
-      title: '@',
+      text: '@',
       singular: '@',
-      plural: '@'
+      plural: '@',
+      define: {
+        noparams: {
+          type: 'htmlbool',
+          value: false
+        }
+      }
     }
   });
 })(window.can);

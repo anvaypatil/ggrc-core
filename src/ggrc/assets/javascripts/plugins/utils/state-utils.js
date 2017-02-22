@@ -13,9 +13,9 @@
        'Control', 'DataAsset', 'Facility', 'Issue', 'Market',
        'Objective', 'OrgGroup', 'Policy', 'Process', 'Product', 'Program',
        'Project', 'Regulation', 'Risk', 'Section', 'Standard', 'System',
-       'Threat', 'Vendor'];
+       'Threat', 'Vendor', 'Issue'];
     var notFilterableModels = [
-      'Person', 'Assessment', 'Issue',
+      'Audit', 'Person', 'Assessment',
       'AssessmentTemplate', 'Workflow',
       'TaskGroup', 'Cycle', 'CycleTaskGroupObjectTask'
     ];

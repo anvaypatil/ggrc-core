@@ -2,9 +2,9 @@
     Copyright (C) 2017 Google Inc.
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
-<collapse-panel-click-area can-click="toggle">
+<collapse-panel-click-area ($click)="toggle()">
     <i class="fa {{#if expanded}}fa-caret-down{{else}}fa-caret-right{{/if}}"></i>
-    {{#titleIcon}}<i class="fa title-icon {{titleIcon}}"></i>{{/titleIcon}}
-    <span  class="title-text">{{titleText}}</span>
+    {{#if titleIcon}}<i class="fa title-icon {{titleIcon}}"></i>{{/if}}
+    <span class="title-text">{{titleText}}</span>
 </collapse-panel-click-area>
-<content></content>
+<content/>

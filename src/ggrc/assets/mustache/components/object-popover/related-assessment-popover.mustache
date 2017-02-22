@@ -3,18 +3,16 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 
-<object-popover item="selectedAssessment" popover-title="selectedAssessmentTitle" direction="popoverDirection"
-                popover-link="selectedAssessmentLink" popover-title-info="popoverTitleInfo">
+<object-popover {item}="selectedAssessment" {popover-title}="selectedAssessmentTitle" {direction}="popoverDirection"
+                {popover-link}="selectedAssessmentLink" {popover-title-info}="popoverTitleInfo">
     <h6>Comments</h6>
-  {{#if item.data}}
-      <related-comments parent-instance="item.data">
+      <related-comments {parent-instance}="item.data">
           <mapped-objects
-                  parent-instance="parentInstance"
-                  related-types="relatedTypes">
-              <comment-list-item instance="instance"></comment-list-item>
+                  {parent-instance}="parentInstance"
+                  {related-types}="relatedTypes">
+              <comment-list-item {instance}="instance"></comment-list-item>
           </mapped-objects>
       </related-comments>
-  {{/if}}
 </object-popover>
-</related-assessment-popover>
+
 

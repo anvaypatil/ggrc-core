@@ -74,6 +74,15 @@
   overflow: auto;
   position: relative;
 
+  &.center-empty-message {
+    > object-list {
+      > .empty-message {
+        padding: 16px 8px;
+        text-align: center;
+      }
+    }
+  }
+
   &.loading {
     overflow: hidden;
     opacity: 0.5;

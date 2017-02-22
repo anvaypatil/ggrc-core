@@ -2,7 +2,7 @@
     Copyright (C) 2017 Google Inc., authors, and contributors
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
-<collapsible-panel-header title-text="titleText" expanded="expanded">
+<collapsible-panel-header title-text="titleText" {(expanded)}="expanded">
   {{#is_allowed 'update' instance context='for'}}
       <i class="fa fa-plus-circle"
          rel="tooltip"
@@ -18,11 +18,11 @@
       </i>
   {{/is_allowed}}
 </collapsible-panel-header>
-<collapsible-panel-body expanded="expanded" class="collapsible-panel-body">
-    <mapped-objects selected-item="selectedItem" parent-instance="instance" filter="filter" mapped-snapshots="mappedSnapshots">
-      <business-object-list-item instance="instance"></business-object-list-item>
+<collapsible-panel-body {expanded}="expanded" class="collapsible-panel-body">
+    <mapped-objects {(selected-item)}="selectedItem" {parent-instance}="instance" {filter}="filter" {mapped-snapshots}="mappedSnapshots">
+      <business-object-list-item {instance}="instance"></business-object-list-item>
     </mapped-objects>
-    <object-popover class="object-popover" item="selectedItem">
-        <detailed-business-object-list-item instance="item.data" object-title="popoverTitle" object-link="popoverLink"></detailed-business-object-list-item>
+    <object-popover class="object-popover" {item}="selectedItem">
+        <detailed-business-object-list-item {instance}="item.data" {^object-title}="popoverTitle" {^object-link}="popoverLink"></detailed-business-object-list-item>
     </object-popover>
 </collapsible-panel-body>

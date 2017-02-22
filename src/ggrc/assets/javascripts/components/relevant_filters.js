@@ -94,5 +94,5 @@
         item.target.attr('value', false);
       }
     }
-  });
+  }, true);
 })(window.can, window.can.$, window.GGRC);

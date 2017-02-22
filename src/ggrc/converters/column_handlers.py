@@ -44,6 +44,7 @@ from ggrc.converters.handlers import list_handlers
 from ggrc.converters.handlers import related_person
 from ggrc.converters.handlers import template
 from ggrc.converters.handlers import document
+from ggrc.converters.handlers import custom_attribute
 from ggrc.converters.handlers.custom_control_column_handler import (
     CustomControlSnapshotInstanceColumnHandler
 )
@@ -110,6 +111,16 @@ _DEFAULT_COLUMN_HANDLERS_DICT = {
     "__mapping__:person": handlers.PersonMappingColumnHandler,
     "__unmapping__:person": handlers.PersonUnmappingColumnHandler,
     "directive": handlers.SectionDirectiveColumnHandler,
+
+    # Prefix column handlers:
+    # If a column handler does not match any full key, the key will be split on
+    # ":" and the prefix will be used in the handler search. This is used to
+    # group many handler keys for the same handler into a more concise list.
+    "__mapping__": handlers.MappingColumnHandler,
+    "__unmapping__": handlers.MappingColumnHandler,
+    "__custom__": custom_attribute.CustomAttributeColumHandler,
+    "__object_custom__": custom_attribute.ObjectCaColumnHandler,
+    "__snapshot_mapping__": CustomControlSnapshotInstanceColumnHandler,
 }
 
 
@@ -119,12 +130,6 @@ EXTENSION_HANDLERS_ATTR = "contributed_column_handlers"
 
 _COLUMN_HANDLERS = {
     DEFAULT_HANDLERS_KEY: _DEFAULT_COLUMN_HANDLERS_DICT,
-    "Assessment": {
-        "__mapping__:control": CustomControlSnapshotInstanceColumnHandler,
-    },
-    "Issue": {
-        "__mapping__:control": CustomControlSnapshotInstanceColumnHandler,
-    }
 }
 
 

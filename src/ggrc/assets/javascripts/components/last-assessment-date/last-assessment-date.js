@@ -15,19 +15,34 @@
     sortDirection: 'desc'
   });
   var REQUIRED_FIELDS = Object.freeze(['finished_date']);
+  var ALLOWED_TYPES = Object.freeze(['Control', 'Objective']);
 
-  can.Component.extend({
+  GGRC.Components('lastAssessmentDate', {
     tag: 'last-assessment-date',
-    template: '<content/>',
+    template: '{{localize_date lastAssessmentDate}}',
     viewModel: {
-      instanceId: null,
-      instanceType: null,
+      instance: null,
       lastAssessmentDate: null
     },
     init: function () {
-      var id = this.viewModel.instanceId;
-      var type = this.viewModel.instanceType;
-      if (id && type) {
+      var instance = this.viewModel.instance;
+      var isSnapshot;
+      var id;
+      var type;
+
+      if (!instance) {
+        return;
+      }
+
+      isSnapshot = !!this.viewModel.instance.snapshot;
+      if (isSnapshot) {
+        id = instance.snapshot.child_id;
+        type = instance.snapshot.child_type;
+      } else {
+        id = instance.id;
+        type = instance.type;
+      }
+      if (id && type && ALLOWED_TYPES.indexOf(type) > -1) {
         this.loadLastAssessment(type, id);
       }
     },
@@ -35,6 +50,7 @@
       var viewModel = this.viewModel;
       var params = queryAPI.buildParam(REQUESTED_TYPE, FILTER_OPTIONS, {
         type: type,
+        operation: 'relevant',
         id: id
       }, REQUIRED_FIELDS);
 

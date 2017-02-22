@@ -310,6 +310,8 @@
             var hiddenElement;
             var tagName;
 
+            // 'is_allowed' helper rerenders an elements
+            // we should trigger event for hidden element
             if (!$trigger.is(':visible') && option.uniqueId &&
               $trigger.context) {
               tagName = $trigger.context.tagName;

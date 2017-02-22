@@ -39,6 +39,10 @@ mapper-results {
       justify-content: flex-end;
       align-items: center;
 
+      .dropdown-toggle {
+        font-size: 12px;
+      }
+
       .dropdown-toggle,
       ::-webkit-input-placeholder {
         color: $gray;

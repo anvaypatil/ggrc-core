@@ -17,7 +17,7 @@
           <span class="gray"><em>Finished</em></span>
         {{/case}}
         {{#case 'InProgress'}}
-          <span class="yellow"><em>In progress</em></span>
+          <span class="orange"><em>In progress</em></span>
         {{/case}}
         {{#case 'Overdue'}}
             <span class="error"><em>Overdue</em></span>
@@ -55,7 +55,7 @@
                           <span class="blue"><em>Finished</em></span>
                         {{/case}}
                         {{#case 'InProgress'}}
-                          <span class="yellow"><em>In progress</em></span>
+                          <span class="orange"><em>In progress</em></span>
                         {{/case}}
                       {{/switch}}
                       {{^if_equals instance.status 'Verified'}}{{#is_overdue instance.end_date}}

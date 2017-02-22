@@ -28,9 +28,7 @@
     </span>
   {{/case}}
   {{#case 'last_assessment_date'}}
-    <last-assessment-date instance-id="instance.id" instance-type="instance.type">
-      {{localize_date lastAssessmentDate}}
-    </last-assessment-date>
+    <last-assessment-date instance="instance"/>
   {{/case}}
 
   {{#default}}

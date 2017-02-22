@@ -65,5 +65,5 @@
     }
   };
 
-  GGRC.Components('autocomplete', component);
+  GGRC.Components('autocomplete', component, true);
 })(window.GGRC, window.can);

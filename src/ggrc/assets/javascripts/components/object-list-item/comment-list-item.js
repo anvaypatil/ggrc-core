@@ -19,7 +19,7 @@
       instance: {},
       define: {
         showIcon: {
-          type: Boolean,
+          type: 'boolean',
           value: false
         },
         iconCls: {
@@ -34,9 +34,24 @@
             return this.attr('instance');
           }
         },
-        itemText: {
+        commentText: {
           get: function () {
             return this.attr('itemData.description');
+          }
+        },
+        commentCreationDate: {
+          get: function () {
+            return this.attr('itemData.created_at');
+          }
+        },
+        commentAuthor: {
+          get: function () {
+            return this.attr('itemData.modified_by') || false;
+          }
+        },
+        commentAuthorType: {
+          get: function () {
+            return this.attr('itemData.assignee_type') || false;
           }
         },
         hasRevision: {

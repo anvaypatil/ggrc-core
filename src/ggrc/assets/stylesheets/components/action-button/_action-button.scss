@@ -114,6 +114,20 @@
       }
     }
 
+    &.btn-icon-sm {
+      line-height: 26px;
+      padding: 0 8px;
+
+      .fa {
+        line-height: 26px;
+        font-size: 16px;
+        height: 26px;
+        width: 26px;
+        border-radius: 2px;
+      }
+
+    }
+
     &.btn-icon-md {
       line-height: 26px;
       padding: 0 8px;

@@ -20,19 +20,22 @@
         }
       },
       instance: {},
-      isSelected: false
+      isSelected: false,
+      checkSelection: function (el, ev) {
+        var filter = this.attr('selectionEl');
+        return filter.length ?
+          can.$(ev.target).closest(filter, el).length :
+          true;
+      },
+      onSelect: function (el, ev) {
+        var isSelected = this.checkSelection(el, ev);
+        var event = isSelected ? 'selectItem' : 'deselectItem';
+        this.dispatch(event);
+      }
     },
     events: {
-      '{this.element} click': function (cmpEl, ev) {
-        var filter = this.viewModel.attr('selectionEl');
-        var el = filter.length ?
-          can.$(ev.target).closest(filter, cmpEl) :
-          cmpEl;
-        if (el.length) {
-          can.trigger(el, 'selectItem', [this.viewModel.instance]);
-        } else {
-          can.trigger(cmpEl, 'deselectItems');
-        }
+      '{this.element} click': function (el, ev) {
+        this.viewModel.onSelect(el, ev);
       }
     }
   });

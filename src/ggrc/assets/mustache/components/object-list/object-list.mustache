@@ -3,12 +3,21 @@
     Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
 }}
 {{#if isLoading}}
-    <spinner toggle="isLoading" extra-css-class="{{spinnerCss}}" class="spinner-wrapper active"></spinner>
+    <spinner {toggle}="isLoading" {extra-css-class}="spinnerCss" class="spinner-wrapper active"></spinner>
+{{else}}
+  {{#if items.length}}
+    {{#items}}
+        <object-list-item {instance}="instance" {is-selected}="isSelected" {selection-el}="objectListItemSelector"
+                          (selectItem)="selectItem($element, %viewModel.instance)"
+                          (deselectItem)="clearSelection()">
+            <div class="object-list-item {{#if isSelected}}selected{{/if}}">
+                <content>No item component or template is provided</content>
+            </div>
+        </object-list-item>
+    {{/items}}
+  {{else}}
+      <span class="empty-message">
+        {{getEmptyMessage}}
+      </span>
+  {{/if}}
 {{/if}}
-{{#items}}
-  <object-list-item instance="instance" is-selected="isSelected" selection-el="objectListItemSelector">
-      <div class="object-list-item {{#if isSelected}}selected{{/if}}">
-        <content>No item component or template is provided</content>
-      </div>
-  </object-list-item>
-{{/items}}

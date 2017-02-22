@@ -14,12 +14,12 @@ Assessment,Code*,Audit*,Title*,Error description - non existing column will be i
 ,Assessment 12,Audit,Assessment title 8,"State will be changed to in-progress, because of the updates to assessment.",,changes,In Progress,user1@a.com,user2@a.com,7/12/2015,5/22/2016,,,
 ,Assessment 16,Audit,Assessment title 1,"proj-55 does not exist non_existing@a.com does not exist ", --- already exists ---,notes 1,In Progress,"user1@a.com
 user2@a.com","user2@a.com
-user3@a.com",7/1/2015,5/11/2016,proj-55,mkt-1,
-,Assessment 17,Audit,Assessment title 2,Missing Due On date - will default to today + 7 days,,notes 2,In Progress,user1@a.com,user2@a.com,5/11/2016,,proj-1,mkt-2,
-,Assessment 18,Audit,Assessment title 3,Missing Starts On on date - will default to today,,notes 2,In Progress,user1@a.com,user2@a.com,,5/12/2016,proj-1,mkt-2,
+user3@a.com",7/1/2015,5/11/2016,proj-55,,
+,Assessment 17,Audit,Assessment title 2,Missing Due On date - will default to today + 7 days,,notes 2,In Progress,user1@a.com,user2@a.com,5/11/2016,,proj-1,,
+,Assessment 18,Audit,Assessment title 3,Missing Starts On on date - will default to today,,notes 2,In Progress,user1@a.com,user2@a.com,,5/12/2016,proj-1,,
 ,Assessment 19,Audit,Assessment title 4,"Missing Starts On on and Due On dates, default today / today + 7 days",,notes 3,In Progress,user1@a.com,user2@a.com,,,,,
 ,Assessment 20,Audit,Assessment title 5,Missing assessment type - will take default , --- already exists ---,notes 4,In Progress,user1@a.com,user2@a.com,7/4/2015,5/14/2016,,,
 ,Assessment 21,not existing,Assessment title 6,Not existing audit does not exist, --- already exists ---,notes 5,In Progress,user1@a.com,user2@a.com,7/5/2015,5/15/2016,,,
-,Assessment 22,Audit,same title no warning,"Can not set a state of a new assessment to verified or finished, because adding a new one is treated the same as updating an old one, except all values are new",,notes 3,open,user1@a.com,user2@a.com,7/3/2015,5/13/2016,proj-2,mkt-3,
+,Assessment 22,Audit,same title no warning,"Can not set a state of a new assessment to verified or finished, because adding a new one is treated the same as updating an old one, except all values are new",,notes 3,open,user1@a.com,user2@a.com,7/3/2015,5/13/2016,proj-2,,
 ,Assessment 23,Audit,same title no warning,"Can not set a state of a new assessment to verified or finished, because adding a new one is treated the same as updating an old one, except all values are new",,notes 4,Completed,user1@a.com,user2@a.com,7/4/2015,5/14/2016,proj-3,,
 ,Assessment 22,Audit,Assessment title 1,Duplicate code line will be ignored, --- already exists ---,,Verified,user1@a.com,user2@a.com,7/5/2015,5/15/2016,,,

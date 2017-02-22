@@ -7,7 +7,6 @@ from StringIO import StringIO
 from ggrc.models.reflection import AttributeInfo
 from ggrc.converters.column_handlers import model_column_handlers
 from ggrc.converters.handlers import handlers
-from ggrc.converters.handlers import custom_attribute
 
 
 def get_object_column_definitions(object_class):
@@ -29,20 +28,20 @@ def get_object_column_definitions(object_class):
   column_handlers = model_column_handlers(object_class)
   for key, attr in attributes.iteritems():
     handler_key = attr.get("handler_key", key)
-    handler = column_handlers.get(handler_key, handlers.ColumnHandler)
+    # check full handler keys
+    handler = column_handlers.get(handler_key)
+    if not handler:
+      # check handler key prefixes
+      handler = column_handlers.get(handler_key.split(":")[0])
+    if not handler:
+      # use default handler
+      handler = handlers.ColumnHandler
     validator = None
     default = None
     if attr["type"] == AttributeInfo.Type.PROPERTY:
       validator = getattr(object_class, "validate_{}".format(key), None)
       default = getattr(object_class, "default_{}".format(key), None)
-    elif attr["type"] == AttributeInfo.Type.MAPPING:
-      handler = column_handlers.get(key, handlers.MappingColumnHandler)
-    elif attr["type"] == AttributeInfo.Type.CUSTOM:
-      handler = column_handlers.get(
-          key, custom_attribute.CustomAttributeColumHandler)
-    elif attr["type"] == AttributeInfo.Type.OBJECT_CUSTOM:
-      handler = column_handlers.get(
-          key, custom_attribute.ObjectCaColumnHandler)
+
     attr["handler"] = attr.get("handler", handler)
     attr["validator"] = attr.get("validator", validator)
     attr["default"] = attr.get("default", default)

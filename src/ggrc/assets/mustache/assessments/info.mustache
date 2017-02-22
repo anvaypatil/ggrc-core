@@ -63,28 +63,25 @@
                 <tabs instance="instance">
                     <tab-panel panels="panels" title-text="Assessment Attributes" instance="instance">
                         <div class="atrribute-tab-panel-column">
-                            <collapsible-panel title-text="Description" collapsed="true" title-icon="fa-list-ol"
-                                               class="details-item">
+                            <collapsible-panel title-text="Description" title-icon="fa-list-ol" class="details-item">
                                 <read-more text="description"></read-more>
                             </collapsible-panel>
-                            <collapsible-panel title-text="People" collapsed="true" title-icon="fa-users" class="details-item">
+                            <collapsible-panel title-text="People" title-icon="fa-users" class="details-item">
                                 <people-list instance="instance" editable="true" disable-title="true"></people-list>
                             </collapsible-panel>
-                            <collapsible-panel title-text="Dates" collapsed="true" title-icon="fa-calendar"
-                                               class="details-item">
+                            <collapsible-panel title-text="Dates" title-icon="fa-calendar" class="details-item">
                               {{> '/static/mustache/assessments/dates_list.mustache'}}
                             </collapsible-panel>
-                            <collapsible-panel title-text="Notes" collapsed="true" title-icon="fa-sticky-note-o"
-                                               class="details-item">
+                            <collapsible-panel title-text="Notes" title-icon="fa-sticky-note-o" class="details-item">
                                 <read-more text="notes"></read-more>
                             </collapsible-panel>
                         </div>
 
                         <div class="atrribute-tab-panel-column">
-                          <collapsible-panel title-text="URL" collapsed="true" title-icon="fa-link" class="details-item">
+                          <collapsible-panel title-text="URL" title-icon="fa-link" class="details-item">
                             {{> '/static/mustache/assessments/urls.mustache'}}
                           </collapsible-panel>
-                          <collapsible-panel title-text="Code" collapsed="true" title-icon="fa-code" class="details-item">
+                          <collapsible-panel title-text="Code" title-icon="fa-code" class="details-item">
                               <ul class="label-list">
                                   <li>
                                       <h6>Code</h6>
@@ -92,7 +89,7 @@
                                   </li>
                               </ul>
                           </collapsible-panel>
-                          <collapsible-panel title-text="Conclusions" collapsed="true" title-icon="fa-gavel"
+                          <collapsible-panel title-text="Conclusions" title-icon="fa-gavel"
                                              class="details-item">
                               <div class="flex-box flex-col"
                                 {{#instance}}{{data 'model'}}{{/instance}}

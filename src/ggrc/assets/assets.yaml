@@ -211,6 +211,7 @@ dashboard-js-files:
   - components/unified-mapper/mapper.js
   - components/unified-mapper/mapper-toolbar.js
   - components/unified-mapper/mapper-filter.js
+  - components/unified-mapper/mapper-status-filter.js
   - components/unified-mapper/mapper-results.js
   - components/unified-mapper/mapper-results-item.js
   - components/unified-mapper/mapper-results-item-status.js
@@ -410,6 +411,7 @@ dashboard-js-template-files:
   - components/autocomplete/autocomplete.mustache
   - components/unified-mapper/mapper-toolbar.mustache
   - components/unified-mapper/mapper-filter.mustache
+  - components/unified-mapper/mapper-status-filter.mustache
   - components/unified-mapper/mapper-results.mustache
   - components/unified-mapper/mapper-results-item.mustache
   - components/unified-mapper/mapper-results-item-status.mustache

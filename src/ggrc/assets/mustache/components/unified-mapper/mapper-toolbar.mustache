@@ -28,6 +28,7 @@
               class="btn btn-small btn-draft create-control"
               href="javascript://"
               data-toggle="modal-ajax-form"
+              data-unique-id="{{mapper.join_object_id}}"
               data-modal-class="modal-wide"
               data-object-singular="{{model_info 'AssessmentTemplate' 'model_singular'}}"
               data-object-plural="{{model_info 'AssessmentTemplate' 'root_collection'}}"
@@ -53,6 +54,7 @@
                 class="btn btn-small btn-draft create-control"
                 href="javascript://"
                 data-toggle="modal-ajax-form"
+                data-unique-id="{{mapper.join_object_id}}"
                 data-modal-class="modal-wide"
                 data-object-singular="{{mapper.model.singular}}"
                 data-object-plural="{{mapper.model.plural}}"
@@ -73,9 +75,12 @@
     </mapper-filter>
   </div>
   <div class="col">
-    <div>
-      &nbsp;
-    </div>
+    {{#showStatusFilter}}
+      <mapper-status-filter
+        {(statuses)}="statuses"
+        {(status-filter)}="statusFilter">
+      </mapper-status-filter>
+    {{/showStatusFilter}}
   </div>
 </div>
 </div>

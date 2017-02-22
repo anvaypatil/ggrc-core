@@ -5,6 +5,7 @@ from os.path import abspath, dirname, join
 
 from ggrc import converters
 from ggrc import models
+from ggrc.snapshotter import rules
 from ggrc.converters import column_handlers
 from ggrc.converters import import_helper
 from ggrc.converters.import_helper import get_object_column_definitions
@@ -21,8 +22,12 @@ CSV_DIR = join(THIS_ABS_PATH, 'example_csvs/')
 
 
 def get_mapping_names(class_name):
-  mapping_rules = get_mapping_rules().get(class_name, set([]))
-  unmapping_rules = get_unmapping_rules().get(class_name, set([]))
+  if class_name in rules.Types.scoped:
+    mapping_rules = rules.Types.all
+    unmapping_rules = set()
+  else:
+    mapping_rules = get_mapping_rules().get(class_name, set())
+    unmapping_rules = get_unmapping_rules().get(class_name, set())
   pretty_mapping_rules = map(title_from_camelcase, mapping_rules)
   pretty_unmapping_rules = map(title_from_camelcase, unmapping_rules)
   mapping_names = {"map:{}".format(n) for n in pretty_mapping_rules}

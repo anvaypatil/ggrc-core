@@ -28,12 +28,16 @@ Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
         <div class="flex-size-3">
             Urls
         </div>
+        <div class="grid-data__action-column">
+            More info
+        </div>
     </div>
-    <div class="grid-data-body {{#if isLoading}}loading{{/if}}">
-        <object-list items="relatedObjects" is-loading="isLoading" spinner-css="grid-spinner">
+    <div class="grid-data-body center-empty-message {{#if isLoading}}loading{{/if}}">
+        <object-list {items}="relatedObjects" {is-loading}="isLoading" spinner-css="grid-spinner" ({selected-item})="selectedItem"
+                    {object-list-item-selector}="objectSelectorEl" empty-message="No Related Assessments were found">
             <div class="grid-data-row flex-row flex-box">
                 <div class="grid-data-item-index">
-                    <state-colors-map state="status"></state-colors-map>
+                    <state-colors-map {state}="status"></state-colors-map>
                 </div>
                 <div class="grid-data-item-index">
                   {{localize_date finished_date}}
@@ -42,39 +46,43 @@ Licensed under http://www.apache.org/licenses/LICENSE-2.0 <see LICENSE file>
                   {{localize_date created_at}}
                 </div>
                 <div class="flex-size-3">
-                    <related-controls-objectives parent-instance="instance">
+                    <related-controls-objectives {parent-instance}="instance">
                         <mapped-objects
                                 mapped-snapshots="mappedSnapshots"
-                                filter="filter"
-                                parent-instance="parentInstance">
-                            <business-object-list-item instance="instance"></business-object-list-item>
+                                {filter}="filter"
+                                {parent-instance}="parentInstance">
+                            <business-object-list-item {instance}="instance"></business-object-list-item>
                         </mapped-objects>
                     </related-controls-objectives>
                 </div>
                 <div class="flex-size-3">
-                    <related-audits parent-instance="instance">
+                    <related-audits {parent-instance}="instance">
                         <mapped-objects
-                                parent-instance="parentInstance"
-                                related-types="relatedTypes">
+                                {parent-instance}="parentInstance"
+                                {related-types}="relatedTypes">
                             <a href="{{instance.viewLink}}" target="_blank">{{instance.title}}</a>
                         </mapped-objects>
                     </related-audits>
                 </div>
                 <div class="flex-size-3">
                     <mapped-objects
-                            parent-instance="instance"
+                            {parent-instance}="instance"
                             mapping="{{instance.class.info_pane_options.evidence.mapping}}">
-                        <document-object-list-item instance="instance"></document-object-list-item>
+                        <document-object-list-item {instance}="instance"></document-object-list-item>
                     </mapped-objects>
                 </div>
                 <div class="flex-size-3">
                     <mapped-objects
-                            parent-instance="instance"
+                            {parent-instance}="instance"
                             mapping="{{instance.class.info_pane_options.urls.mapping}}">
-                        <document-object-list-item instance="instance"></document-object-list-item>
+                        <document-object-list-item {instance}="instance"></document-object-list-item>
                     </mapped-objects>
+                </div>
+                <div class="grid-data__action-column">
+                    <button class="btn btn-icon btn-icon-sm" title="Show More Information"><i class="fa fa-comment-o"></i></button>
                 </div>
             </div>
         </object-list>
+        <related-assessment-popover class="object-popover" {selected-assessment}="selectedItem"></related-assessment-popover>
     </div>
 </related-objects>

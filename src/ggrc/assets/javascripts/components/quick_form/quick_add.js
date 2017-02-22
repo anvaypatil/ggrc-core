@@ -85,7 +85,7 @@
           this.scope.attributes.attr($(el).attr("name"), $(el).val());
         }.bind(this));
       },
-      "a[data-toggle=submit]:not(.disabled) click": function (el, ev) {
+      'a[data-toggle=submit]:not(.disabled):not([disabled]) click': function (el, ev) {
         var scope = this.scope;
         var join_model_class;
         var join_object;
@@ -288,6 +288,6 @@
           });
         };
       }
-    },
-  });
+    }
+  }, true);
 })(window.can, window.can.$);

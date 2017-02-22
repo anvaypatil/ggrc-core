@@ -3412,11 +3412,12 @@ Mustache.registerHelper('with_create_issue_json', function (instance, options) {
   audit = audits[0].instance.reify();
   programs = audit.get_mapping('_program');
   program = programs.length ? programs[0].instance.reify() : {};
-  control = instance.control ? instance.control.reify() : {};
-  relatedControls = instance.get_mapping('related_controls');
+  control = instance.control ? instance.control : {};
+  relatedControls = instance.mappedSnapshots;
 
   if (!control.id && relatedControls.length) {
     control = relatedControls[0].instance;
+    instance.control = control;
   }
   json = {
     audit: {title: audit.title, id: audit.id, type: audit.type},
@@ -3719,7 +3720,42 @@ Example:
       if (modalType === matchingModal) {
         return options.fn(options.contexts);
       }
+      return options.inverse(options.contexts);
+    }
+  );
 
+  /**
+   * Check if a person is contained in the given authorization list and render
+   * the corresponding Mustache block.
+   *
+   * Example usage:
+   *
+   *   {{#isInAuthList assignee approvedEditors}}
+   *     <Edit button here...>
+   *   {{else}}
+   *     Editing not allowed.
+   *   {{/isInAuthList}}
+   *
+   * @param {CMS.Models.Person} person - the user to check for an authorization
+   * @param {Array} authList - the list of authorization grants
+   * @param {Object} options - a CanJS options argument passed to every helper
+   */
+  Mustache.registerHelper(
+    'isInAuthList',
+    function (person, authList, options) {
+      var emails;
+
+      person = Mustache.resolve(person) || {};
+      authList = Mustache.resolve(authList) || [];
+
+      emails = _.map(authList, function (item) {
+        var person = item.instance.person.reify();
+        return person.email;
+      });
+
+      if (_.includes(emails, person.email)) {
+        return options.fn(options.contexts);
+      }
       return options.inverse(options.contexts);
     }
   );

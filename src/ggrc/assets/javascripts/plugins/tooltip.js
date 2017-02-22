@@ -81,6 +81,10 @@
 
       monitorTimeoutId = setTimeout(monitorFn, monitorPeriod);
       $currentTarget.data('tooltip-monitor', true);
+      // Hide tooltip when target clicked
+      $currentTarget.on('click', function () {
+        $('.tooltip').hide();
+      });
     }
   }
   ;

@@ -27,10 +27,10 @@
    * @param {String} name - the name under which to register the component
    * @param {Object} config - the component configuration object as expected
    *   by the underlying can.Component.extend() method
-   *
+   * @param {Boolean} isLegacy - indicated if custom define plugin should be used
    * @return {Function} - the created component constructor
    */
-  function Components(name, config) {
+  function Components(name, config, isLegacy) {
     var constructor;
     var definitions;
 
@@ -42,13 +42,15 @@
       throw new Error('Component already exists: ' + name);
     }
 
-    if (config.scope && _.isObject(config.scope.define)) {
-      definitions = config.scope.define;
-      delete config.scope.define;
-    }
+    if (isLegacy) {
+      if (config.scope && _.isObject(config.scope.define)) {
+        definitions = config.scope.define;
+        delete config.scope.define;
+      }
 
-    if (definitions) {
-      config.scope = Components._extendScope(config.scope, definitions);
+      if (definitions) {
+        config.scope = Components._extendScope(config.scope, definitions);
+      }
     }
 
     constructor = can.Component.extend(config);
@@ -191,5 +193,20 @@
     }
 
     return Components._registry[name];
+  };
+
+  /**
+   * Retrieve a Component's ViewModel from the registry.
+   * If no such Component is defined, an error is thrown.
+   * @param {String} name - the name of component to retrieve
+   * @return {can.Map|Error} - Component's View Model
+   */
+  Components.getViewModel = function (name) {
+    var viewModelConfig = Components.get(name).prototype.viewModel;
+    // if viewModelConfig is already a can.Map constructor no need to create a temporary class
+    if (can.isFunction(viewModelConfig)) {
+      return new viewModelConfig();
+    }
+    return new (can.Map.extend(viewModelConfig));
   };
 })(window.GGRC = window.GGRC || {}, can, _);

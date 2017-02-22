@@ -26,6 +26,7 @@
                   mapper="mapper"
                   is-loading="mapper.is_loading"
                   {(filter)}="mapper.filter"
+                  {(status-filter)}="mapper.statusFilter"
                   (submit)="mapper.onToolbarSubmit()">
   </mapper-toolbar>
   <hr/>
@@ -40,6 +41,7 @@
     selected="mapper.selected"
     contact="mapper.contact"
     filter="mapper.filter"
+    status-filter="mapper.statusFilter"
     submit-cbs="mapper.toolbarSubmitCbs">
   </mapper-results>
   <div class="well well-small

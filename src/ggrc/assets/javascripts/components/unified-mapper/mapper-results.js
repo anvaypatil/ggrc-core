@@ -5,6 +5,9 @@
 (function (can, GGRC, CMS, $) {
   'use strict';
 
+  var DEFAULT_PAGE_SIZE = 5;
+  var DEFAULT_SORT_DIRECTION = 'asc';
+
   can.Component.extend('mapperResults', {
     tag: 'mapper-results',
     template: can.view(
@@ -14,7 +17,7 @@
     viewModel: {
       paging: {
         current: 1,
-        pageSize: 5,
+        pageSize: DEFAULT_PAGE_SIZE,
         filter: '',
         pageSizeSelect: [5, 10, 15]
       },
@@ -24,7 +27,7 @@
       },
       sort: {
         key: '',
-        direction: 'asc'
+        direction: DEFAULT_SORT_DIRECTION
       },
       mapper: null,
       isLoading: false,
@@ -33,6 +36,7 @@
       allSelected: false,
       baseInstance: null,
       filter: '',
+      statusFilter: '',
       selected: [],
       refreshItems: false,
       submitCbs: null,
@@ -46,7 +50,7 @@
       },
       init: function () {
         var self = this;
-        this.attr('submitCbs').add(this.onSearch.bind(this));
+        this.attr('submitCbs').add(this.onSearch.bind(this, true));
         CMS.Models.DisplayPrefs.getSingleton().then(function (displayPrefs) {
           self.attr('displayPrefs', displayPrefs);
         });
@@ -64,6 +68,47 @@
         var count = Math.ceil(total / this.attr('paging.pageSize'));
         this.attr('paging.total', total);
         this.attr('paging.count', count);
+      },
+      showNewEntries: function () {
+        var self = this;
+        var newEntries;
+        var sortKey = 'updated_at';
+        var sortDirection = 'desc';
+
+        if (this.attr('mapper.newEntries')) {
+          newEntries = this.attr('mapper.newEntries').map(function (value) {
+            return {
+              id: value.id,
+              type: value.type,
+              data: self.transformValue(value),
+              isSelected: true,
+              markedSelected: true
+            };
+          });
+
+          // select new entries
+          this.attr('selected').push.apply(this.attr('selected'), newEntries);
+        }
+
+        // clear filter
+        this.attr('filter', '');
+        this.attr('prevSelected', this.attr('selected').slice());
+
+        if (this.attr('sort.key') === sortKey &&
+          this.attr('sort.direction') === sortDirection) {
+          this.onSearch();
+        } else {
+          // sort by update date.
+          // this action triggers search
+          this.attr('sort.key', sortKey);
+          this.attr('sort.direction', sortDirection);
+        }
+
+        // set current page
+        this.attr('paging.current', 1);
+
+        // display results
+        this.attr('mapper.afterSearch', true);
       },
       setItems: function () {
         var self = this;
@@ -97,7 +142,16 @@
         this.attr('relatedAssessments.show',
           !!Model.tree_view_options.show_related_assessments);
       },
-      onSearch: function () {
+      resetSearchParams: function () {
+        this.attr('paging.current', 1);
+        this.attr('paging.pageSize', DEFAULT_PAGE_SIZE);
+        this.attr('sort.key', '');
+        this.attr('sort.direction', DEFAULT_SORT_DIRECTION);
+      },
+      onSearch: function (resetParams) {
+        if (resetParams) {
+          this.resetSearchParams();
+        }
         this.attr('refreshItems', true);
       },
       prepareRelevantFilters: function () {
@@ -120,11 +174,11 @@
           });
         return filters;
       },
-      prepareBaseQuery: function (modelName, paging, filters, ownedFilter) {
+      prepareBaseQuery: function (modelName, paging, filters, statusFilter) {
         return GGRC.Utils.QueryAPI
-          .buildParam(modelName, paging, filters, [], ownedFilter);
+          .buildParam(modelName, paging, filters, [], statusFilter);
       },
-      prepareRelatedQuery: function (modelName, ownedFilter) {
+      prepareRelatedQuery: function (modelName, statusFilter) {
         if (!this.attr('baseInstance')) {
           return null;
         }
@@ -136,26 +190,14 @@
             type: this.attr('baseInstance.type'),
             id: this.attr('baseInstance.id'),
             operation: 'relevant'
-          }, [], ownedFilter);
+          }, [], statusFilter);
       },
-      prepareOwnedFilter: function () {
-        var contact = this.attr('contact');
-        var contactEmail = this.attr('mapper.contactEmail');
-        var operation = 'owned';
-        // This property is set to false till filters are not working properly
-        var filterIsWorkingProperly = false;
-
-        if (!contact || !contactEmail || !filterIsWorkingProperly) {
+      prepareStatusFilter: function () {
+        var statusFilter = this.attr('statusFilter');
+        if (!statusFilter) {
           return null;
         }
-
-        return {
-          expression: {
-            op: {name: operation},
-            ids: [String(contact.id)],
-            object_name: this.attr('type')
-          }
-        };
+        return GGRC.query_parser.parse(statusFilter);
       },
       loadAllItems: function () {
         this.attr('allItems', this.loadAllItemsIds());
@@ -167,7 +209,7 @@
           filter: this.attr('filter')
         };
         var filters = this.prepareRelevantFilters();
-        var ownedFilter = this.prepareOwnedFilter();
+        var statusFilter = this.prepareStatusFilter();
         var query;
         var relatedQuery;
 
@@ -180,8 +222,8 @@
           }
         }
 
-        query = this.prepareBaseQuery(modelName, paging, filters, ownedFilter);
-        relatedQuery = this.prepareRelatedQuery(modelName, ownedFilter);
+        query = this.prepareBaseQuery(modelName, paging, filters, statusFilter);
+        relatedQuery = this.prepareRelatedQuery(modelName, statusFilter);
         if (useSnapshots) {
           // Transform Base Query to Snapshot
           query = GGRC.Utils.Snapshots.transformQuery(query);
@@ -220,7 +262,15 @@
         });
       },
       setSelectedItems: function (allItems) {
-        var selectedItems = can.makeArray(this.attr('selected'));
+        var selectedItems;
+
+        // get items which were selected before adding of new entries
+        if (this.attr('prevSelected') && this.attr('prevSelected').length > 0) {
+          this.attr('selected', this.attr('prevSelected').slice());
+          this.attr('prevSelected', []);
+        }
+
+        selectedItems = can.makeArray(this.attr('selected'));
         allItems.forEach(function (item) {
           item.isSelected =
             selectedItems.some(function (selectedItem) {
@@ -326,7 +376,7 @@
       },
       '{viewModel} refreshItems': function (scope, ev, refreshItems) {
         if (refreshItems) {
-          this.viewModel.setItems();
+          this.viewModel.setItemsDebounced();
           this.viewModel.attr('refreshItems', false);
         }
       },

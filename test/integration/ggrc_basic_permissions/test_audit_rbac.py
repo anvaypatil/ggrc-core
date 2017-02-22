@@ -37,11 +37,13 @@ class TestAuditRBAC(TestCase):
 
   def sanity_check(self):
     """Sanity check if the audit_rbac.csv was imported correctly"""
-    assert len(self.people) == 17, \
-        "Expecting 17 people not {}.".format(len(self.people))
-    assert len(self.related_objects) == 11, \
-        "Expecting 11 objects mapped to audit not {}."\
-        .format(len(self.related_objects))
+    expected = 17
+    assert len(self.people) == expected, \
+        "Expecting {} people not {}.".format(expected, len(self.people))
+    expected = 9
+    assert len(self.related_objects) == expected, \
+        "Expecting {} objects mapped to audit not {}."\
+        .format(expected, len(self.related_objects))
 
   def read(self, objects):
     """Attempt to do a GET request for every object in the objects list"""

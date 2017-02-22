@@ -18,17 +18,18 @@
     viewModel: {
       define: {
         objectListItemSelector: {
-          type: String,
-          value: ''
-        },
-        spinnerCss: {
-          type: String,
+          type: 'string',
           value: ''
         }
       },
-      isLoading: false,
+      emptyMessage: '@',
+      spinnerCss: '@',
       selectedItem: {},
       items: [],
+      isLoading: false,
+      getEmptyMessage: function () {
+        return this.attr('emptyMessage') || 'None';
+      },
       selectItem: function (el, selectedItem) {
         var type = selectedItem.type;
         var id = selectedItem.id;
@@ -60,12 +61,6 @@
       }
     },
     events: {
-      'object-list-item selectItem': function (el, ev, instance) {
-        this.viewModel.selectItem(el, instance);
-      },
-      'object-list-item deselectItems': function () {
-        this.viewModel.clearSelection();
-      },
       '{window} click': function (el, ev) {
         this.viewModel.onClickHandler(this.element, ev);
       }

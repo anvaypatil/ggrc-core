@@ -9,26 +9,28 @@
   var tag = 'collapsible-panel';
   var tpl = can.view(GGRC.mustache_path +
     '/components/collapsible-panel/collapsible-panel.mustache');
+  var viewModel = can.Map.extend({
+    titleText: '@',
+    titleIcon: '@',
+    extraCssClass: '@',
+    define: {
+      /**
+       * Public attribute to indicate expanded/collapsed status of the component
+       * @type {Boolean}
+       * @public
+       */
+      expanded: {
+        type: 'boolean',
+        value: false
+      }
+    }
+  });
   /**
-   * Collapsible Panel component to add collapsing behavior
+   * Collapsible Panel component to add expand/collapse behavior
    */
   GGRC.Components('collapsiblePanel', {
     tag: tag,
     template: tpl,
-    scope: {
-      titleText: '@',
-      titleIcon: '@',
-      extraCssClass: '@',
-      expanded: true,
-      define: {
-        collapsed: {
-          type: 'boolean',
-          'default': false
-        }
-      }
-    },
-    init: function () {
-      this.scope.attr('expanded', !(this.scope.attr('collapsed')));
-    }
+    viewModel: viewModel
   });
 })(window.can, window.GGRC);

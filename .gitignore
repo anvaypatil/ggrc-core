@@ -71,3 +71,6 @@ test/selenium/asseluser
 
 # Karma runner's default coverage report directory
 coverage
+
+# LibreOffice locks
+.~lock.*#

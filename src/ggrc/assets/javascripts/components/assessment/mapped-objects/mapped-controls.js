@@ -25,10 +25,8 @@
       },
       mapping: '@',
       mappingType: '@',
-      expanded: true,
       selectedItem: {},
-      instance: null,
-      scopeObject: null
+      instance: null
     }
   });
 })(window.can, window.GGRC);

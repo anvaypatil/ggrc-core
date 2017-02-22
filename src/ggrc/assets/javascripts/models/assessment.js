@@ -255,11 +255,15 @@
         this._super.apply(this, arguments);
       }
     },
-    save: function () {
-      if (!this.attr('program')) {
-        this.attr('program', this.attr('audit.program'));
+    before_create: function (dfd) {
+      if (!this.audit) {
+        throw new Error('Cannot save assessment, audit not set.');
+      } else if (!this.audit.program || !this.audit.context) {
+        throw new Error(
+          'Cannot save assessment, audit context or program not set.');
       }
-      return this._super.apply(this, arguments);
+      this.attr('program', this.attr('audit.program'));
+      this.attr('context', this.attr('audit.context'));
     },
     after_save: function () {
       this.updateValidation();

@@ -836,6 +836,13 @@
             attr.attr_sort_field = attr.attr_name;
           }
           return attr;
+        }).sort(function (a, b) {
+          if (a.order && !b.order) {
+            return -1;
+          } else if (!a.order && b.order) {
+            return 1;
+          }
+          return a.order - b.order;
         });
 
       var customAttrs =

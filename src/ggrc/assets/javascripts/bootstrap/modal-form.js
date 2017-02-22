@@ -192,10 +192,14 @@
             this.$element
               .find("[data-dismiss='modal'], [data-dismiss='modal-reset']")
               .trigger('click');
+            $(window).trigger('modal:dismiss', this.options);
             this.hide();
           }.bind(this));
           return;
         }
+
+        // trigger event if form is not dirty
+        $(window).trigger('modal:dismiss', this.options);
       }
 
       // Hide the modal like normal

@@ -231,5 +231,5 @@
         return opts.fn();
       }
     }
-  });
+  }, true);
 })(window.can, window.GGRC, window.moment);

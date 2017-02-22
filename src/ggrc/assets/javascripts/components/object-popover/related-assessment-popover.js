@@ -29,7 +29,7 @@
         },
         selectedAssessmentLink: {
           get: function () {
-            return this.attr('selectedAssessment.data.selfLink');
+            return this.attr('selectedAssessment.data.viewLink');
           }
         }
       }
