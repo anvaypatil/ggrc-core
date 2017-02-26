@@ -52,6 +52,11 @@ class Cycle(WithContact, Stateful, Timeboxed, Described, Titled, Slugged,
           "display_name": "Workflow",
           "filter_by": "_filter_by_cycle_workflow",
       },
+      "status": {
+          "display_name": "State",
+          "mandatory": False,
+          "description": "Options are: \n{} ".format('\n'.join(VALID_STATES))
+      }
   }
 
   @classmethod

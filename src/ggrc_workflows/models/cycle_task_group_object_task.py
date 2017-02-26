@@ -138,6 +138,13 @@ class CycleTaskGroupObjectTask(
           "display_name": "Task Type",
           "mandatory": True,
       },
+      "status": {
+          "display_name": "State",
+          "mandatory": False,
+          "description": "Options are:\n{}".
+                          format('\n'.join((item if item else 'None'
+                                            for item in VALID_STATES)))
+      }
   }
 
   @computed_property

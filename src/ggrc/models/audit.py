@@ -80,10 +80,6 @@ class Audit(Snapshotable, clonable.Clonable,
           "type": AttributeInfo.Type.USER_ROLE,
           "filter_by": "_filter_by_auditor",
       },
-      "status": {
-          "display_name": "Status",
-          "mandatory": True,
-      },
       "start_date": "Planned Start Date",
       "end_date": "Planned End Date",
       "report_start_date": "Planned Report Period from",
@@ -97,6 +93,11 @@ class Audit(Snapshotable, clonable.Clonable,
       "notes": None,
       "url": None,
       "reference_url": None,
+      "status": {
+          "display_name": "Status",
+          "mandatory": True,
+          "description": "Options are:\n{}".format('\n'.join(VALID_STATES))
+      }
   }
 
   def _clone(self, source_object):

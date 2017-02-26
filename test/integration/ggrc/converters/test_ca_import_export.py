@@ -30,11 +30,7 @@ class TestCustomAttributeImportExport(TestCase):
       self.create_custom_attributes()
       self.create_people()
     self.client.get("/login")
-    self.headers = {
-        'Content-Type': 'application/json',
-        "X-Requested-By": "GGRC",
-        "X-export-view": "blocks",
-    }
+    self.headers = ObjectGenerator.get_header()
     TestCustomAttributeImportExport._set_up = False
 
   def create_custom_attributes(self):
@@ -175,7 +171,7 @@ class TestCustomAttributeImportExport(TestCase):
                                 headers=self.headers)
 
     self.assert200(response)
-    self.assertEqual(len(response.data.splitlines()), 30)
+    self.assertEqual(len(response.data.splitlines()), 33)
     self.assertIn("\"Accepted values are", response.data)
     self.assertIn("number.\n\nAccepted values are", response.data)
     self.assertIn("Birthday", response.data)

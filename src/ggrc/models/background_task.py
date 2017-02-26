@@ -40,6 +40,14 @@ class BackgroundTask(Base, Stateful, db.Model):
       'result'
   ]
 
+  _aliases = {
+      "status": {
+          "display_name": "State",
+          "mandatory": False,
+          "description": "Options are: \n{}".format('\n'.join(VALID_STATES))
+      }
+  }
+
   def start(self):
     self.status = "Running"
     db.session.add(self)

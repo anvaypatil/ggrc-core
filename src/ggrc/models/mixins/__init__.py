@@ -683,6 +683,15 @@ class BusinessObject(Stateful, Noted, Described, Hyperlinked, WithContact,
       'Deprecated'
   )
 
+  _aliases = {
+      "status": {
+          "display_name": "State",
+          "mandatory": False,
+          "description": "Options are:\n{}".format('\n'.join(VALID_STATES))
+      }
+  }
+
+
 # This class is just a marker interface/mixin to indicate that a model type
 # supports custom attributes.
 

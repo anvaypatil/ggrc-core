@@ -19,6 +19,7 @@ from ggrc.converters import errors
 
 from integration.ggrc.models import factories
 from integration.ggrc import TestCase
+from integration.ggrc.generator import ObjectGenerator
 
 
 class TestAssessmentImport(TestCase):
@@ -287,11 +288,7 @@ class TestAssessmentExport(TestCase):
     """ Set up for Assessment test cases """
     super(TestAssessmentExport, self).setUp()
     self.client.get("/login")
-    self.headers = {
-        'Content-Type': 'application/json',
-        "X-Requested-By": "GGRC",
-        "X-export-view": "blocks",
-    }
+    self.headers = ObjectGenerator.get_header()
 
   def export_csv(self, data):
     return self.client.post("/_service/export_csv", data=dumps(data),
@@ -331,7 +328,7 @@ class TestAssessmentExport(TestCase):
     }]
     response = self.export_csv(data)
 
-    keys, vals = response.data.strip().split("\n")[4:6]
+    keys, vals = response.data.strip().split("\n")[7:9]
     keys = next(csv.reader(StringIO(keys), delimiter=","), [])
     vals = next(csv.reader(StringIO(vals), delimiter=","), [])
     instance_dict = dict(izip(keys, vals))
